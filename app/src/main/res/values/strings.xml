@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyInstagGallery</string>
+    <string name="token_id" translatable="false">token_id</string>
+    <string name="post">post</string>
+</resources>
