@@ -1,4 +1,4 @@
-package com.ngallazzi.myinstaggallery.remote;
+package com.ngallazzi.myinstaggallery.remote.api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

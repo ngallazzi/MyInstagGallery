@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">MyInstagGallery</string>
     <string name="token_id" translatable="false">token_id</string>
-    <string name="post">post</string>
+    <string name="media">media</string>
+    <string name="follows">followers</string>
+    <string name="followed">followed</string>
+    <string name="media_desc">user post</string>
+    <string name="username">username</string>
 </resources>

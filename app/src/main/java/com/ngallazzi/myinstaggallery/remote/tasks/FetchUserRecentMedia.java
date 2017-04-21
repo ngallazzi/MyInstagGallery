@@ -1,11 +1,9 @@
-package com.ngallazzi.myinstaggallery.remote;
+package com.ngallazzi.myinstaggallery.remote.tasks;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.ngallazzi.myinstaggallery.models.Data;
-
-import java.util.ArrayList;
+import com.ngallazzi.myinstaggallery.remote.api.MyApi;
+import com.ngallazzi.myinstaggallery.remote.api.RecentMediaResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,10 +31,10 @@ public class FetchUserRecentMedia {
 
     public void execute() {
         mCallbacks.onTaskStarted();
-        Call<Data> call = myApiInstance.getInstagramService().listRecentMedia(mToken);
-        call.enqueue(new Callback<Data>() {
+        Call<RecentMediaResponse> call = myApiInstance.getInstagramService().listRecentMedia(mToken);
+        call.enqueue(new Callback<RecentMediaResponse>() {
             @Override
-            public void onResponse(Call<Data> call, Response<Data> response) {
+            public void onResponse(Call<RecentMediaResponse> call, Response<RecentMediaResponse> response) {
                 if (response.isSuccessful()) {
                     mCallbacks.onSuccess(response.body());
                 }else{
@@ -45,7 +43,7 @@ public class FetchUserRecentMedia {
             }
 
             @Override
-            public void onFailure(Call<Data> call, Throwable t) {
+            public void onFailure(Call<RecentMediaResponse> call, Throwable t) {
                 mCallbacks.onFailure(t.getMessage());
             }
         });
@@ -53,7 +51,7 @@ public class FetchUserRecentMedia {
 
     public interface FetchUserRecentMediaCallbacks {
         void onTaskStarted();
-        void onSuccess(Data userData);
+        void onSuccess(RecentMediaResponse response);
         void onError(int errorCode);
         void onFailure(String error);
     }

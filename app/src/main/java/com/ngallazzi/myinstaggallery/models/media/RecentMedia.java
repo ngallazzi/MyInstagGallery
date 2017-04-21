@@ -1,4 +1,4 @@
-package com.ngallazzi.myinstaggallery.models;
+package com.ngallazzi.myinstaggallery.models.media;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -9,7 +9,6 @@ import com.google.gson.annotations.SerializedName;
 public class RecentMedia {
     @SerializedName("id")
     public String id;
-    public User user;
     @SerializedName("images")
     public Images images;
     @SerializedName("created_time")
