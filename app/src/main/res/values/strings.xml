@@ -6,4 +6,7 @@
     <string name="followed">followed</string>
     <string name="media_desc">user post</string>
     <string name="username">username</string>
+    <string name="logout">logout</string>
+    <string name="login_error">Error occurred during login</string>
+    <string name="back">Back</string>
 </resources>

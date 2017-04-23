@@ -6,11 +6,17 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.Toast;
 
 import java.net.URI;
 import java.net.URL;
@@ -41,9 +47,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        initWebView();
+    }
+
+    public void initWebView(){
         wvLogin.setWebViewClient(new MyWebViewClient());
         wvLogin.loadUrl(authUrl);
     }
+
 
     private class MyWebViewClient extends WebViewClient {
         @Override
@@ -55,6 +66,12 @@ public class LoginActivity extends AppCompatActivity {
                 return true;
             }
             return false;
+        }
+
+        @Override
+        public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+            super.onReceivedHttpError(view, request, errorResponse);
+            Utils.clearApplicationData(mContext);
         }
     }
 
