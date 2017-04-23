@@ -54,12 +54,12 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         View layout = (View) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_image, parent, false);
         final ViewHolder vh = new ViewHolder(layout);
-        dialog = new MediaDialog(mContext);
+
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Images images = mImages.get(vh.getAdapterPosition());
-                dialog.setImageUrl(images.standardResolution.url);
+                Images curImages = mImages.get(vh.getAdapterPosition());
+                dialog = new MediaDialog(mContext,curImages.standardResolution.url);
                 dialog.show();
             }
         });

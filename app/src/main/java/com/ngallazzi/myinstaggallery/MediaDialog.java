@@ -16,15 +16,14 @@ import com.squareup.picasso.Picasso;
 public class MediaDialog extends Dialog {
     Context mContext;
     ImageView ivFullScreen;
-    public MediaDialog(@NonNull Context context) {
+
+    public MediaDialog(@NonNull Context context, String imageUrl) {
         super(context);
         mContext = context;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.fullscreen_image_layout);
         ivFullScreen = (ImageView) findViewById(R.id.ivFullScreen);
+        Picasso.with(mContext).load(imageUrl).into(ivFullScreen);
     }
 
-    public void setImageUrl(String url){
-        Picasso.with(mContext).load(url).into(ivFullScreen);
-    }
 }

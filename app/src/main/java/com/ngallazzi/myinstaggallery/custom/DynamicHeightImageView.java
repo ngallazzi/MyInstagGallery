@@ -14,8 +14,6 @@ public class DynamicHeightImageView extends android.support.v7.widget.AppCompatI
     Paint borderPaint;
     private float mAspectRatio = 1.0f;
     private final float STROKE_WIDTH = 10.0f;
-    private final String TAG = DynamicHeightImageView.class.getSimpleName();
-    private Context mContext;
     private int measuredWidth,forecastHeight;
 
     public DynamicHeightImageView(Context context, AttributeSet attrs) {
@@ -24,7 +22,6 @@ public class DynamicHeightImageView extends android.support.v7.widget.AppCompatI
                 attrs,
                 R.styleable.DynamicHeightImageView,
                 0, 0);
-        mContext = context;
         initBorderPaint(a);
     }
 
@@ -34,11 +31,6 @@ public class DynamicHeightImageView extends android.support.v7.widget.AppCompatI
         borderPaint.setColor(borderColor);
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setStrokeWidth(STROKE_WIDTH);
-    }
-
-    public void setAspectRatio(float aspectRatio) {
-        mAspectRatio = aspectRatio;
-        requestLayout();
     }
 
     @Override

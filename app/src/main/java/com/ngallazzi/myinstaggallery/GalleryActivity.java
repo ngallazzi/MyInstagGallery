@@ -137,6 +137,7 @@ public class GalleryActivity extends AppCompatActivity {
     }
 
     public void updateDataset(ArrayList<RecentMedia> media){
+        mDataset.clear();
         for (RecentMedia rm : media){
             mDataset.add(rm.images);
         }
