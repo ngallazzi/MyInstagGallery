@@ -29,7 +29,6 @@ public class FetchUserInfos {
     }
 
     public void execute() {
-        mCallbacks.onTaskStarted();
         Call<UserDataResponse> call = myApiInstance.getInstagramService().getUserInfos(mToken);
         call.enqueue(new Callback<UserDataResponse>() {
             @Override
@@ -49,7 +48,6 @@ public class FetchUserInfos {
     }
 
     public interface FetchUserInfosCallbacks {
-        void onTaskStarted();
         void onSuccess(UserDataResponse userData);
         void onError(int errorCode);
         void onFailure(String error);

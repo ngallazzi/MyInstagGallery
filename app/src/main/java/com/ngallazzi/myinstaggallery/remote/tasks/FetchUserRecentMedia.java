@@ -30,7 +30,6 @@ public class FetchUserRecentMedia {
     }
 
     public void execute() {
-        mCallbacks.onTaskStarted();
         Call<RecentMediaResponse> call = myApiInstance.getInstagramService().listRecentMedia(mToken);
         call.enqueue(new Callback<RecentMediaResponse>() {
             @Override
@@ -50,7 +49,6 @@ public class FetchUserRecentMedia {
     }
 
     public interface FetchUserRecentMediaCallbacks {
-        void onTaskStarted();
         void onSuccess(RecentMediaResponse response);
         void onError(int errorCode);
         void onFailure(String error);

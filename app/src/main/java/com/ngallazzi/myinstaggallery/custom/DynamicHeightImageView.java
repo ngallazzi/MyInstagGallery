@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -27,7 +28,7 @@ public class DynamicHeightImageView extends android.support.v7.widget.AppCompatI
 
     public void initBorderPaint(TypedArray a){
         borderPaint = new Paint();
-        int borderColor = a.getColor(R.styleable.DynamicHeightImageView_borderColor, Color.parseColor("#212121"));
+        int borderColor = a.getColor(R.styleable.DynamicHeightImageView_borderColor, ContextCompat.getColor(getContext(),R.color.details));
         borderPaint.setColor(borderColor);
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setStrokeWidth(STROKE_WIDTH);
@@ -38,7 +39,7 @@ public class DynamicHeightImageView extends android.support.v7.widget.AppCompatI
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         measuredWidth = getMeasuredWidth();
         forecastHeight = (int) (measuredWidth / mAspectRatio);
-        setMeasuredDimension(measuredWidth,forecastHeight );
+        setMeasuredDimension(measuredWidth,forecastHeight);
     }
 
     @Override

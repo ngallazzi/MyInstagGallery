@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +43,7 @@ public class GalleryActivity extends AppCompatActivity {
     private final String SAVED_USER_DATA_ID = "user_data_id";
     private final String SAVED_RECYCLER_VIEW_STATUS_ID = "rv_status_id";
     private final String SAVED_RECYCLER_VIEW_DATASET_ID = "rv_dataset_id";
+    private final String DIALOG_MEDIA_ID = "dialog_media";
 
     @BindView(R.id.tvUserName)
     TextView tvUserName;
@@ -65,6 +66,7 @@ public class GalleryActivity extends AppCompatActivity {
     Context mContext;
     Parcelable mListState;
     Bundle mSavedInstanceState;
+    MediaDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -89,11 +91,6 @@ public class GalleryActivity extends AppCompatActivity {
     public void getUserInfos(final String token){
         new FetchUserInfos(new FetchUserInfos.FetchUserInfosCallbacks() {
             @Override
-            public void onTaskStarted() {
-
-            }
-
-            @Override
             public void onSuccess(UserDataResponse response) {
                 userData = response.data;
                 setUserHeader();
@@ -114,11 +111,6 @@ public class GalleryActivity extends AppCompatActivity {
 
     public void getUserMedia(String token){
         new FetchUserRecentMedia(new FetchUserRecentMedia.FetchUserRecentMediaCallbacks() {
-            @Override
-            public void onTaskStarted() {
-
-            }
-
             @Override
             public void onSuccess(RecentMediaResponse userData) {
                 updateDataset(userData.media);
@@ -154,14 +146,24 @@ public class GalleryActivity extends AppCompatActivity {
 
     public void initRecyclerView(){
         mRvMedia.setHasFixedSize(true);
-        // use a linear layout manager
         mLayoutManager = new GridLayoutManager(this,COLUMNS_COUNT);
         mRvMedia.setLayoutManager(mLayoutManager);
         mDataset = new ArrayList<Images>();
-        // specify an adapter (see also next example)
-        mAdapter = new MediaAdapter(mDataset,mContext);
+        mAdapter = new MediaAdapter(mDataset, mContext, new MediaAdapter.OnRecyclerItemClickListener() {
+            @Override
+            public void onItemClicked(String imageUrl) {
+                showImageDialog(imageUrl);
+            }
+        });
         mRvMedia.setAdapter(mAdapter);
     }
+
+    private void showImageDialog(String imageUrl) {
+        FragmentManager fm = getSupportFragmentManager();
+        MediaDialog mediaDialog = MediaDialog.newInstance(imageUrl);
+        mediaDialog.show(fm, DIALOG_MEDIA_ID);
+    }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -213,8 +215,6 @@ public class GalleryActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             logout();
             return true;

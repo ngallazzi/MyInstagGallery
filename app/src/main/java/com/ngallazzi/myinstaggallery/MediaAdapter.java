@@ -31,6 +31,7 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
     private ArrayList<Images> mImages;
     private Context mContext;
     private MediaDialog dialog;
+    private OnRecyclerItemClickListener mListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public DynamicHeightImageView ivMedia;
@@ -40,10 +41,16 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public MediaAdapter(ArrayList<Images> myDataset, Context context) {
+    public MediaAdapter(ArrayList<Images> myDataset, Context context, OnRecyclerItemClickListener listener) {
         mImages = myDataset;
         mContext = context;
+        mListener = listener;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        mListener = null;
     }
 
     // Create new views (invoked by the layout manager)
@@ -54,21 +61,18 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         View layout = (View) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_image, parent, false);
         final ViewHolder vh = new ViewHolder(layout);
-
         vh.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Images curImages = mImages.get(vh.getAdapterPosition());
-                dialog = new MediaDialog(mContext,curImages.standardResolution.url);
-                dialog.show();
+                if (mListener!=null){
+                    mListener.onItemClicked(curImages.standardResolution.url);
+                }
             }
         });
         return vh;
     }
 
-
-
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         // - get element from your dataset at this position
@@ -89,6 +93,10 @@ public class MediaAdapter extends RecyclerView.Adapter<MediaAdapter.ViewHolder> 
         }else{
             return 0;
         }
+    }
+
+    public interface OnRecyclerItemClickListener{
+        void onItemClicked(String imageUrl);
     }
 }
 

@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyApi {
     private static MyApi mInstance = null;
-    public static final String BASE_URL = "https://api.instagram.com/v1/";
+    private static final String BASE_URL = "https://api.instagram.com/v1/";
     private InstagramService mInstagramService;
 
     private MyApi() {
